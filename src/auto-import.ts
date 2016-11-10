@@ -25,7 +25,8 @@ export class AutoImport {
 
     public attachCommands(): void {
 
-        let codeActionFixer = vscode.languages.registerCodeActionsProvider('typescript', new ImportAction())
+        let codeActionFixerTs = vscode.languages.registerCodeActionsProvider('typescript', new ImportAction())
+        let codeActionFixerTsx = vscode.languages.registerCodeActionsProvider('typescriptreact', new ImportAction())
 
         let importScanner = vscode.commands.registerCommand('extension.importScan', (request: any) => {
             let scanner = new ImportScanner(vscode.workspace.getConfiguration('autoimport'))
@@ -53,7 +54,7 @@ export class AutoImport {
 
         AutoImport.statusBar.show();
 
-        this.context.subscriptions.push(importScanner, importFixer, nodeScanner, codeActionFixer, AutoImport.statusBar);
+        this.context.subscriptions.push(importScanner, importFixer, nodeScanner, codeActionFixerTs, codeActionFixerTsx, AutoImport.statusBar);
     }
 
     public attachFileWatcher(): void {
